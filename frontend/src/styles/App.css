@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto&display=swap');
+*{
+    background-color: rgb(26, 25, 25);
+    color: azure;
+    font-family: "Figtree", sans-serif;
+    margin: 0;
+}
+
+.info{
+    border-radius: 5px;
+    height: 86vh;
+    transition: .5s;
+    border: 1px solid rgb(64, 65, 65);
+}
+
+.info:hover{
+    
+    border: 1px solid azure;
+    
+}
+
+.search{
+    margin-left: 35%;
+    margin-top: 25%;
+}
+
+.btns{
+    margin-top: 4px;
+    display: flex;    
+    justify-content: space-evenly;
+}

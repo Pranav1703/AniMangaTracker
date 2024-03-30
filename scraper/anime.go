@@ -9,6 +9,7 @@ type T_Anime struct {
 	Place string
 	Name string
 	Url string
+	ImgSrc string
 }
 
 func TrendingAnime() []T_Anime{
@@ -47,6 +48,7 @@ func TrendingAnime() []T_Anime{
 			trendingAnime.Place = h.ChildText("span")
 			trendingAnime.Name = h.ChildText(".film-title")
 			trendingAnime.Url = baseUrl+h.ChildAttr("a","href")
+			trendingAnime.ImgSrc = h.ChildAttr("img","src")
 			trendingAnimeList = append(trendingAnimeList, *trendingAnime)
 		})
 		

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"ani-manga_scraper/scraper"
 )
 
 // App struct
@@ -25,3 +26,8 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
+
+func (a *App) GetUpdatedManga() []scraper.LU_Manga{
+	data := scraper.LastestUpdatedManga()
+	return data
+} 
