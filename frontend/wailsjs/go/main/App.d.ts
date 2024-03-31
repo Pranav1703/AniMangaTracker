@@ -5,3 +5,5 @@ import {scraper} from '../models';
 export function GetUpdatedManga():Promise<Array<scraper.LU_Manga>>;
 
 export function Greet(arg1:string):Promise<string>;
+
+export function OpenUrl(arg1:string):Promise<void>;

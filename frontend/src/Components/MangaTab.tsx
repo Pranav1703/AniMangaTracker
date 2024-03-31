@@ -2,24 +2,38 @@ import { Input, InputGroup,InputRightAddon } from '@chakra-ui/react'
 import {GetUpdatedManga} from "../../wailsjs/go/main/App"
 import { Button , ButtonGroup} from '@chakra-ui/react'
 import { useState } from 'react'
+import Card from './Card'
 
+type LrManga = {
+  Title: string,
+  Chapters_released: string[],
+  Url: string,
+  ImgSrc: string,
+  id?: number
+}
 
 const MangaTab = () => {
   
-  const [LatestManga,setLatestManga] = useState<any>(false) 
-  const [LRClicked,setLRClicked] = useState<boolean>(false)// LR - latest release
+  const [LatestManga,setLatestManga] = useState<Array<any>>([]) 
+  const [LrBtnClicked,setLrBtnClicked] = useState<boolean>(false)// LR - latest release
 //   const [btnClicked,setBtnClicked] = useState<boolean>(false)
 
   const LatestRelease = async()=>{
-    setLRClicked(true) 
+    setLrBtnClicked(true) 
     try {
         const res = await GetUpdatedManga()
         console.log(res)
-        setLatestManga(res)
+        const cardData = res.map((ele:LrManga,index)=>(
+          {
+            ...ele,
+            id: index+1
+          }
+        ));
+        
+        setLatestManga(cardData)
       } catch (error) {
         console.log("error while fetching manga data",error)
     }
-    
   }
 
   return (
@@ -30,10 +44,10 @@ const MangaTab = () => {
               search
             </InputRightAddon>
         </InputGroup>
-        <div className='info'>
-            {
-                LRClicked===false?(
-                    <div className='search'>
+        <div className='main'>
+          {
+                LrBtnClicked===false?(
+                    <div className='searchBtns'>
                         
                         <ButtonGroup gap={5}>
                     
@@ -46,7 +60,7 @@ const MangaTab = () => {
                     
                             <Button
                               colorScheme='teal'
-                              onClick={()=>setLRClicked(true)}
+                              onClick={()=>setLrBtnClicked(true)}
                             >
                             Trending
                             </Button>
@@ -55,6 +69,7 @@ const MangaTab = () => {
 
                     </div>
                 ):(
+                  <>
                     <div className='btns'>
                         
                         <Button
@@ -73,9 +88,15 @@ const MangaTab = () => {
                         </Button>
 
                     </div>
+                    <div className='list'>
+                        {LatestManga.map((i:LrManga)=>(
+                          <Card key={i.id} title={i.Title} chapters={i.Chapters_released} url={i.Url} imgSrc={i.ImgSrc} />
+                        ))}
+                    </div>
+                  </>  
                 )
-            }
-        </div>
+          }
+      </div>
     </div>
   )
 }

@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"os/exec"
+    "runtime"
 	"ani-manga_scraper/scraper"
 )
 
@@ -25,6 +27,20 @@ func (a *App) startup(ctx context.Context) {
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
+}
+
+func (a *App) OpenUrl(url string) error {
+	var cmd *exec.Cmd
+
+    switch runtime.GOOS {
+    case "windows":
+        cmd = exec.Command("cmd", "/c", "start", url)
+    case "darwin":
+        cmd = exec.Command("open", url)
+    default:
+        cmd = exec.Command("xdg-open", url)
+    }
+	return cmd.Run()
 }
 
 func (a *App) GetUpdatedManga() []scraper.LU_Manga{

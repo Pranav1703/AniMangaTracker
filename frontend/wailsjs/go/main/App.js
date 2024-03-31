@@ -9,3 +9,7 @@ export function GetUpdatedManga() {
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
+
+export function OpenUrl(arg1) {
+  return window['go']['main']['App']['OpenUrl'](arg1);
+}
