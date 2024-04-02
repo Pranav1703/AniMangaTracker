@@ -1,8 +1,11 @@
+import "../styles/mangatab/manga.css"
 import { Input, InputGroup,InputRightAddon } from '@chakra-ui/react'
 import {GetUpdatedManga} from "../../wailsjs/go/main/App"
 import { Button , ButtonGroup} from '@chakra-ui/react'
 import { useState } from 'react'
 import Card from './Card'
+import { Spinner } from '@chakra-ui/react'
+
 
 type LrManga = {
   Title: string,
@@ -12,11 +15,12 @@ type LrManga = {
   id?: number
 }
 
+
 const MangaTab = () => {
   
   const [LatestManga,setLatestManga] = useState<Array<any>>([]) 
   const [LrBtnClicked,setLrBtnClicked] = useState<boolean>(false)// LR - latest release
-//   const [btnClicked,setBtnClicked] = useState<boolean>(false)
+  const [searchQuery,setSearchQuery] = useState<string>("")
 
   const LatestRelease = async()=>{
     setLrBtnClicked(true) 
@@ -36,65 +40,65 @@ const MangaTab = () => {
     }
   }
 
+  const searchList = ()=>{
+    console.log(searchQuery)
+
+    setSearchQuery("")
+  }
+
+
+
   return (
     <div className='manga'>
         <InputGroup size='md' margin={'6px 0px'}>
-            <Input placeholder='search for manga' size='md'/>
+            <Input placeholder='search for manga' size='md' value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)}/>
             <InputRightAddon color={'gray'}>
-              search
+              <button onClick={searchList}>
+                search
+              </button>
             </InputRightAddon>
         </InputGroup>
         <div className='main'>
-          {
-                LrBtnClicked===false?(
-                    <div className='searchBtns'>
-                        
-                        <ButtonGroup gap={5}>
+          <div className='searchBtns'>
                     
-                            <Button
-                              colorScheme='cyan'
-                              onClick={LatestRelease}
-                            >
-                            Latest Release
-                            </Button>
-                    
-                            <Button
-                              colorScheme='teal'
-                              onClick={()=>setLrBtnClicked(true)}
-                            >
-                            Trending
-                            </Button>
-                    
-                        </ButtonGroup>
+                    <Button
+                      colorScheme='cyan'
+                      onClick={LatestRelease}
+                    >
+                    Latest Release
+                    </Button>
+            
+                    <Button
+                      colorScheme='teal'
+                      onClick={()=>{}}
+                    >
+                    Trending
+                    </Button>
 
-                    </div>
-                ):(
-                  <>
-                    <div className='btns'>
-                        
-                        <Button
-                          colorScheme='cyan'
-                          onClick={LatestRelease}
-                        >
-                        Latest Release
-                        </Button>
-                        
-                        <Button
-                          colorScheme='teal'
-                          onClick={()=>{}}
-                          
-                        >
-                        Trending
-                        </Button>
+          </div>
 
-                    </div>
+          {             
+                LrBtnClicked===true?(
                     <div className='list'>
-                        {LatestManga.map((i:LrManga)=>(
-                          <Card key={i.id} title={i.Title} chapters={i.Chapters_released} url={i.Url} imgSrc={i.ImgSrc} />
-                        ))}
+                        {
+                          LatestManga.length > 0 ?
+                          (
+                            LatestManga.map((i:LrManga)=>(
+                              <Card key={i.id} title={i.Title} chapters={i.Chapters_released} url={i.Url} imgSrc={i.ImgSrc} />
+                            ))
+                          ):(
+                            <div className='loader'>
+                              <Spinner size='xl' />
+                            </div>
+                          )
+                        }
                     </div>
-                  </>  
-                )
+                  ):(
+                    <div className='select'>
+                      <p>...</p>
+                    </div>
+                  )
+
           }
       </div>
     </div>
