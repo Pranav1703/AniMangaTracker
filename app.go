@@ -30,6 +30,7 @@ func (a *App) Greet(name string) string {
 }
 
 func (a *App) OpenUrl(url string) error {
+	
 	var cmd *exec.Cmd
 
     switch runtime.GOOS {

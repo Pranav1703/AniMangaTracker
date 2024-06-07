@@ -3,6 +3,7 @@ import {GetUpdatedManga ,GetTrendingManga} from "../../wailsjs/go/main/App"
 import { Button } from '@chakra-ui/react'
 import { useState } from 'react'
 import LatestReleaseCard from './cards/LatestReleaseCard'
+import TrendingCard from './cards/TrendingCard'
 import { Spinner } from '@chakra-ui/react'
 
 
@@ -49,6 +50,8 @@ const MangaTab = () => {
     try {
       const res = await GetTrendingManga();
       console.log(res)
+
+      setTrendingManga(res)
     } catch (error) {
       console.log("error while fetching trending manga data",error)
     }
@@ -90,10 +93,10 @@ const MangaTab = () => {
                     Trending
                     </Button>
           </div>
-          <div className='list'>
+
           {             
             LrBtnClicked===true?(
-                  <>
+                  <div className='LR-List'>
                     {
                       LatestManga.length > 0 ?
                       (
@@ -106,16 +109,26 @@ const MangaTab = () => {
                         </div>
                       )
                     }
-                  </>
+                    </div>
               ):TBtnClicked?(
-                <div>
-                  <p>...</p>
-                </div>
+                  <div className='T-List'>
+                    {
+                      TrendingManga.length>0?(
+                        TrendingManga.map((i)=>(
+                          <TrendingCard key={i.Position} title={i.Title} imgSrc={i.ImgSrc} link={i.Url} position={i.Position}/>
+                        ))
+                      ):(
+                        <div className='loader'>
+                          <Spinner size='xl' />
+                        </div>
+                      )
+                    }
+                  </div>
               ):(
                 null
               )
           }
-          </div>
+
       </div>
     </div>
   )

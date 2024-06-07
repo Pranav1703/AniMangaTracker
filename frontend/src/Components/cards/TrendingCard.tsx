@@ -10,20 +10,19 @@ type CardProps = {
   link: string
 }
 
-const TMangaCard = ({title,imgSrc,position,link}:CardProps) => {
+const TrendingCard = ({title,imgSrc,position,link}:CardProps) => {
   return (
     <div className='T-Card'>
-      <img src={imgSrc} alt="poster" />
+      <img src={imgSrc} width={150} alt="poster" />
       <div id='T-info'>
-        <b>{position}</b>
+        <b style={{fontSize:"600"}}>{position}</b>
         <p id='para'>Title: {title}</p>
-        <Button colorScheme='teal' variant='outline' onClick={()=>OpenUrl(link)}>
+        <Button colorScheme='teal' variant='outline' onClick={()=>OpenUrl(link)} width={"md"}>
             Read
         </Button>
       </div>
-
     </div>
   )
 }
 
-export default TMangaCard
+export default TrendingCard

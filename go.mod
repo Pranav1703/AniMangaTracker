@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/gocolly/colly/v2 v2.1.0
-	github.com/wailsapp/wails/v2 v2.8.0
+	github.com/wailsapp/wails/v2 v2.8.2
 )
 
 require (

@@ -2,6 +2,7 @@ import { InputGroup, Input, InputRightAddon, Button, Spinner } from '@chakra-ui/
 import { useState } from 'react'
 import {GetLatestReleaseAnime,GetTrendingAnime} from "../../wailsjs/go/main/App"
 import LatestReleaseCard from './cards/LatestReleaseCard'
+import TrendingCard from './cards/TrendingCard'
 
 const AnimeTab = () => {
   
@@ -77,12 +78,10 @@ const AnimeTab = () => {
                   Trending
                   </Button>
           </div>
-          <div className="list">
+
             {
-              
               LrBtnClicked?(
-              
-                <>
+                <div className='LR-List'>
                   {
                     LatestAnime.length>0?(
                       LatestAnime.map((i,index=0)=>(
@@ -94,16 +93,26 @@ const AnimeTab = () => {
                       </div>
                     )
                   }
-                </>
+                </div>
               
               ):TBtnClicked?(
-                <></>
+                <div className='T-List'>
+                {
+                  TrendingAnime.length>0?(
+                    TrendingAnime.map((i)=>(
+                      <TrendingCard key={i.Place} title={i.Name} imgSrc={i.ImgSrc} link={i.Url} position={i.Place}/>
+                    ))
+                  ):(
+                    <div className='loader'>
+                      <Spinner size='xl' />
+                    </div>
+                  )
+                }
+                </div>
               ):(
                 null
               )
             }
-          </div>
-
         </div>
     </div>
   )

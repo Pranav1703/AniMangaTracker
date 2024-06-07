@@ -49,9 +49,9 @@ func TrendingAnime() []T_Anime{
 			trendingAnime.Place = h.ChildText("span")
 			trendingAnime.Name = h.ChildText(".film-title")
 			trendingAnime.Url = baseUrl+h.ChildAttr("a","href")
-			trendingAnime.ImgSrc = h.ChildAttr("img","src")
-			trendingAnimeList = append(trendingAnimeList, *trendingAnime)
+			trendingAnime.ImgSrc = h.ChildAttr("img","data-src")
 
+			trendingAnimeList = append(trendingAnimeList, *trendingAnime)
 		})
 		
 	})
@@ -76,14 +76,13 @@ func LatestReleaseAnime() []LU_Anime{
 		fmt.Printf("scrapping %v\n", r.Request.URL)
 	})
 
-	c.OnError(func(r *colly.Response, err error) {
+	c.OnError(func(r *colly.Response, err error){
 		fmt.Printf("somthing went wrong: %v\n", err)
-	})
+	}) 
 
-	c.OnHTML(".film_list-wrap",func(h *colly.HTMLElement) {
+	c.OnHTML(".film_list-wrap",func(h *colly.HTMLElement){
 
 		LatestAnime := new(LU_Anime)
-
 		h.ForEach(".flw-item",func(i int, h *colly.HTMLElement) {
 
 			LatestAnime.Name = h.ChildText(".dynamic-name")
@@ -93,7 +92,6 @@ func LatestReleaseAnime() []LU_Anime{
 
 			LatestAnimeList = append(LatestAnimeList, *LatestAnime)
 		})
-
 	})
 
 	c.Visit(baseUrl+"/recently-updated")

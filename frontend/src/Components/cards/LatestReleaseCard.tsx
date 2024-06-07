@@ -37,20 +37,20 @@ const LatestReleaseCard = ({cardtype,title,chapters,mangaUrl,animeUrl,imgSrc,dur
           <>
           <img src={imgSrc} width={150} alt="poster" />
           <div id="LR-info">
-          <p id="para" className="title">Title: {title}</p>
-          <p id="para" className="chapters">Chapters released: <br/>
-                  {
-                    chapters!.length===1?(
-                      chapters![0]
-                    ):(
-                      chapters!.map((ele,i,array)=>stringFormat(ele,i,array))
-                    )
-                  }
-          </p>
-          <Button colorScheme='teal' variant='outline' onClick={()=>OpenUrl(chapterUrl)}>
-            Read
-          </Button>
-        </div>
+            <p id="para" className="title">Title: {title}</p>
+            <p id="para" className="chapters">Chapters released: <br/>
+                    {
+                      chapters!.length===1?(
+                        chapters![0]
+                      ):(
+                        chapters!.map((ele,i,array)=>stringFormat(ele,i,array))
+                      )
+                    }
+            </p>
+            <Button colorScheme='teal' variant='outline' onClick={()=>OpenUrl(chapterUrl)}>
+              Read
+            </Button>
+          </div>
         </>
         ):cardtype==="anime"?(
           <>
