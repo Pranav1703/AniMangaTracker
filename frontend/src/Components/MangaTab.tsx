@@ -1,9 +1,8 @@
-import "../styles/mangatab/manga.css"
 import { Input, InputGroup,InputRightAddon } from '@chakra-ui/react'
-import {GetUpdatedManga} from "../../wailsjs/go/main/App"
-import { Button , ButtonGroup} from '@chakra-ui/react'
+import {GetUpdatedManga ,GetTrendingManga} from "../../wailsjs/go/main/App"
+import { Button } from '@chakra-ui/react'
 import { useState } from 'react'
-import Card from './Card'
+import LatestReleaseCard from './cards/LatestReleaseCard'
 import { Spinner } from '@chakra-ui/react'
 
 
@@ -19,7 +18,11 @@ type LrManga = {
 const MangaTab = () => {
   
   const [LatestManga,setLatestManga] = useState<Array<any>>([]) 
+  const [TrendingManga,setTrendingManga] = useState<Array<any>>([])
+
   const [LrBtnClicked,setLrBtnClicked] = useState<boolean>(false)// LR - latest release
+  const [TBtnClicked,setTBtnClicked] = useState<boolean>(false) // trending 
+
   const [searchQuery,setSearchQuery] = useState<string>("")
 
   const LatestRelease = async()=>{
@@ -36,8 +39,21 @@ const MangaTab = () => {
         
         setLatestManga(cardData)
       } catch (error) {
-        console.log("error while fetching manga data",error)
+        console.log("error while fetching latest release manga data",error)
     }
+    setTBtnClicked(false)
+  }
+
+  const Trending = async()=>{
+    setTBtnClicked(true);
+    try {
+      const res = await GetTrendingManga();
+      console.log(res)
+    } catch (error) {
+      console.log("error while fetching trending manga data",error)
+    }
+
+    setLrBtnClicked(false)
   }
 
   const searchList = ()=>{
@@ -59,8 +75,7 @@ const MangaTab = () => {
             </InputRightAddon>
         </InputGroup>
         <div className='main'>
-          <div className='searchBtns'>
-                    
+          <div className='searchBtns'>     
                     <Button
                       colorScheme='cyan'
                       onClick={LatestRelease}
@@ -70,36 +85,37 @@ const MangaTab = () => {
             
                     <Button
                       colorScheme='teal'
-                      onClick={()=>{}}
+                      onClick={ Trending }
                     >
                     Trending
                     </Button>
-
           </div>
-
+          <div className='list'>
           {             
-                LrBtnClicked===true?(
-                    <div className='list'>
-                        {
-                          LatestManga.length > 0 ?
-                          (
-                            LatestManga.map((i:LrManga)=>(
-                              <Card key={i.id} title={i.Title} chapters={i.Chapters_released} url={i.Url} imgSrc={i.ImgSrc} />
-                            ))
-                          ):(
-                            <div className='loader'>
-                              <Spinner size='xl' />
-                            </div>
-                          )
-                        }
-                    </div>
-                  ):(
-                    <div className='select'>
-                      <p>...</p>
-                    </div>
-                  )
-
+            LrBtnClicked===true?(
+                  <>
+                    {
+                      LatestManga.length > 0 ?
+                      (
+                        LatestManga.map((i:LrManga)=>(
+                          <LatestReleaseCard key={i.id} cardtype={"manga"} title={i.Title} chapters={i.Chapters_released} mangaUrl={i.Url} imgSrc={i.ImgSrc} />
+                        ))
+                      ):(
+                        <div className='loader'>
+                          <Spinner size='xl' />
+                        </div>
+                      )
+                    }
+                  </>
+              ):TBtnClicked?(
+                <div>
+                  <p>...</p>
+                </div>
+              ):(
+                null
+              )
           }
+          </div>
       </div>
     </div>
   )

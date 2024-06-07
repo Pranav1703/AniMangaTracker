@@ -1,5 +1,6 @@
 // import {useState} from 'react';
 import './styles/App.css';
+import './styles/main.css'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import AnimeTab from './Components/AnimeTab';
 import MangaTab from './Components/MangaTab';

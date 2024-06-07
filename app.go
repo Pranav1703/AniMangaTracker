@@ -47,3 +47,18 @@ func (a *App) GetUpdatedManga() []scraper.LU_Manga{
 	data := scraper.LastestUpdatedManga()
 	return data
 } 
+
+func (a *App) GetTrendingManga() []scraper.T_Manga{
+	data := scraper.TrendingManga()
+	return data
+}
+
+func (a *App) GetLatestReleaseAnime()[]scraper.LU_Anime{
+	data := scraper.LatestReleaseAnime()
+	return data
+}
+
+func (a *App) GetTrendingAnime() []scraper.T_Anime{
+	data := scraper.TrendingAnime()
+	return data
+}

@@ -1,11 +1,7 @@
 package main
 
 import (
-	// "fmt"
-	// "ani-manga_scraper/scraper"
-
 	"embed"
-
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -37,35 +33,4 @@ func main() {
 		println("Error:", err.Error())
 	}
 
-	//scraper code
-		
-// 	fmt.Println("--------------------------------------------------------------------------------------------")
-// 	var choice int;
-// 	fmt.Println("Type '1' for recent manga chapters update and '2' for trending anime list.")
-// 	fmt.Scanf("%d",&choice);
-// 	if(choice == 1){
-// 		manga_data := scraper.LastestUpdateManga()
-
-// 		for _,data := range(manga_data){
-// 			fmt.Printf("\n")
-// 			fmt.Println("title: ",data.Title)
-// 			fmt.Println("URL: ",data.Url)
-// 			fmt.Println("Chapters released: ",data.Chapters_released)
-// 			fmt.Println("imgSrc: ",data.ImgSrc)
-// 			fmt.Printf("\n")
-// 		}
-// 	}else if(choice == 2){
-		
-// 		trendingAnimelist := scraper.TrendingAnime()
-
-// 		for _,aniData := range(trendingAnimelist){
-// 			fmt.Println()
-// 			fmt.Println("No: ",aniData.Place)
-// 			fmt.Println("Name: ",aniData.Name)
-// 			fmt.Println("Url: ",aniData.Url)
-// 			fmt.Println()
-	
-// 		}
-// 	}
-// 	fmt.Println("--------------------------------------------------------------------------------------------")
 }

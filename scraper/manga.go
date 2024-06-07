@@ -12,6 +12,13 @@ type LU_Manga struct { //LU - latest update
 	ImgSrc            string
 }
 
+type T_Manga struct {
+	Url string
+	Position string
+	Title string
+	ImgSrc string
+}
+
 func LastestUpdatedManga() []LU_Manga {
 
 	c := colly.NewCollector()
@@ -50,15 +57,57 @@ func LastestUpdatedManga() []LU_Manga {
 			manga.Chapters_released = h.ChildTexts("a")
 		})
 
-		// fmt.Printf("\n")
-		// fmt.Println("title: ",manga.title)
-		// fmt.Println("URL: ",manga.url)
-		// fmt.Println("Chapters released: ",manga.chapters_released)
-		// fmt.Printf("\n")
 		manga_data = append(manga_data, *manga)
 
 	})
 
 	c.Visit(url)
 	return manga_data
+}
+
+func TrendingManga() []T_Manga{
+	
+	c := colly.NewCollector()
+	trendingMangaData := make([]T_Manga,0)
+
+	url := "https://mangareader.to/home"
+
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Printf("visiting %v\n", r.URL)
+	})
+
+	c.OnResponse(func(r *colly.Response) {
+		fmt.Printf("scrapping %v\n", r.Request.URL)
+	})
+
+	c.OnScraped(func(r *colly.Response) {
+		fmt.Printf("scrapped %v\n",r.Request.URL)
+	})
+
+	c.OnError(func(r *colly.Response, err error) {
+		fmt.Printf("somthing went wrong: %v\n", err)
+	})
+
+	c.OnHTML("#manga-trending",func(h *colly.HTMLElement) {
+		
+		TManga := new(T_Manga)
+		
+		h.ForEach(".swiper-slide",func(i int, h *colly.HTMLElement) {
+
+			TManga.Title = h.ChildText(".anime-name")
+			TManga.ImgSrc = h.ChildAttr("img","src")
+			h.ForEach(".mpd-buttons",func(i int, h *colly.HTMLElement) {
+				links := h.ChildAttrs("a","href")
+				TManga.Url = "https://mangareader.to" + links[0]
+			})
+			h.ForEach(".number",func(i int, h *colly.HTMLElement) {
+				TManga.Position = h.ChildText("span")
+			})
+			trendingMangaData = append(trendingMangaData, *TManga)
+		})
+
+	})
+
+	c.Visit(url)
+	return trendingMangaData
 }

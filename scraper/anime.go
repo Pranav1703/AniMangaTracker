@@ -5,11 +5,18 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-type T_Anime struct {
+type T_Anime struct{
 	Place string
 	Name string
 	Url string
 	ImgSrc string
+}
+
+type LU_Anime struct{
+	Name string
+	Url string
+	ImgSrc string
+	Duration string
 }
 
 func TrendingAnime() []T_Anime{
@@ -19,7 +26,6 @@ func TrendingAnime() []T_Anime{
 	
 	baseUrl := "https://hianime.to"
 	
-
 	c := colly.NewCollector()
 
 	c.OnRequest(func(r *colly.Request) {
@@ -38,26 +44,58 @@ func TrendingAnime() []T_Anime{
 		
 		trendingAnime := new(T_Anime)
 
-		// fmt.Println(h.ChildTexts(".film-title"))
-		// fmt.Println(h.ChildAttrs("a","href"))
-		// fmt.Println(h.ChildTexts("span"))
-		
-		
 		h.ForEach(".item",func(i int, h *colly.HTMLElement) {
-			// fmt.Println(h.ChildAttr("a","href")) //url to anime from base url
+			
 			trendingAnime.Place = h.ChildText("span")
 			trendingAnime.Name = h.ChildText(".film-title")
 			trendingAnime.Url = baseUrl+h.ChildAttr("a","href")
 			trendingAnime.ImgSrc = h.ChildAttr("img","src")
 			trendingAnimeList = append(trendingAnimeList, *trendingAnime)
+
 		})
 		
 	})
 
 	c.Visit(baseUrl+"/home")
-	// for _,data := range(trendingAnimeList){
-	// 	fmt.Println(data)
-	// }
 
 	return trendingAnimeList
+}
+
+func LatestReleaseAnime() []LU_Anime{
+	
+	baseUrl := "https://hianime.to"
+	LatestAnimeList := make([]LU_Anime,0)
+
+	c := colly.NewCollector()
+
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Printf("visiting %v\n", r.URL)
+	})
+
+	c.OnResponse(func(r *colly.Response) {
+		fmt.Printf("scrapping %v\n", r.Request.URL)
+	})
+
+	c.OnError(func(r *colly.Response, err error) {
+		fmt.Printf("somthing went wrong: %v\n", err)
+	})
+
+	c.OnHTML(".film_list-wrap",func(h *colly.HTMLElement) {
+
+		LatestAnime := new(LU_Anime)
+
+		h.ForEach(".flw-item",func(i int, h *colly.HTMLElement) {
+
+			LatestAnime.Name = h.ChildText(".dynamic-name")
+			LatestAnime.Url = baseUrl +"/watch"+ h.ChildAttr(".dynamic-name","href")
+			LatestAnime.ImgSrc = h.ChildAttr(".film-poster-img","data-src")
+			LatestAnime.Duration = h.ChildText(".fdi-duration")
+
+			LatestAnimeList = append(LatestAnimeList, *LatestAnime)
+		})
+
+	})
+
+	c.Visit(baseUrl+"/recently-updated")
+	return LatestAnimeList
 }
