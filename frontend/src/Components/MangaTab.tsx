@@ -115,7 +115,7 @@ const MangaTab = () => {
                     {
                       TrendingManga.length>0?(
                         TrendingManga.map((i)=>(
-                          <TrendingCard key={i.Position} title={i.Title} imgSrc={i.ImgSrc} link={i.Url} position={i.Position}/>
+                          <TrendingCard key={i.Position} title={i.Title} imgSrc={i.ImgSrc} link={i.Url} position={i.Position} cardType={"manga"}/>
                         ))
                       ):(
                         <div className='loader'>

@@ -8,9 +8,10 @@ type CardProps = {
   imgSrc: string
   position: string
   link: string
+  cardType: "anime" | "manga"
 }
 
-const TrendingCard = ({title,imgSrc,position,link}:CardProps) => {
+const TrendingCard = ({title,imgSrc,position,link,cardType}:CardProps) => {
   return (
     <div className='T-Card'>
       <img src={imgSrc} width={150} alt="poster" />
@@ -18,7 +19,13 @@ const TrendingCard = ({title,imgSrc,position,link}:CardProps) => {
         <b style={{fontSize:"600"}}>{position}</b>
         <p id='para'>Title: {title}</p>
         <Button colorScheme='teal' variant='outline' onClick={()=>OpenUrl(link)} width={"md"}>
-            Read
+            {
+              cardType==="anime"?(
+                <p>Watch</p>
+              ):(
+                <p>Read</p>
+              )
+            }
         </Button>
       </div>
     </div>

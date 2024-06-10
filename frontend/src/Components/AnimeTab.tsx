@@ -100,7 +100,7 @@ const AnimeTab = () => {
                 {
                   TrendingAnime.length>0?(
                     TrendingAnime.map((i)=>(
-                      <TrendingCard key={i.Place} title={i.Name} imgSrc={i.ImgSrc} link={i.Url} position={i.Place}/>
+                      <TrendingCard key={i.Place} title={i.Name} imgSrc={i.ImgSrc} link={i.Url} position={i.Place} cardType={"anime"}/>
                     ))
                   ):(
                     <div className='loader'>
