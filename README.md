@@ -1,18 +1,16 @@
 # README
 
-## About
+## Ani-manga scraper
 
-This is the official Wails React-TS template.
+Ani-manga Scraper is a desktop application designed to display trending and latest info about manga and anime. Built using the Wails framework in Go, this app leverages the Colly scraping framework to fetch data from popular manga and anime websites. Two to be specific. 
+for manga info - https://ww1.mangafreak.me
+for anime info - https://hianime.to/home
+The app offers direct redirection to the respective websites for reading manga or watching anime.
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
 
-## Live Development
+## Run locally
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+To run locally, use `wails dev` in the project directory.
 
 ## Building
 
