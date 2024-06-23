@@ -20,6 +20,8 @@ const MangaTab = () => {
   
   const [LatestManga,setLatestManga] = useState<Array<any>>([]) 
   const [TrendingManga,setTrendingManga] = useState<Array<any>>([])
+  const [filteredLatestMangaData,setFilteredLatestMangaData] = useState<Array<any>>([])
+  const [filteredTrendingMangaData,setFilteredTrendingMangaData] = useState<Array<any>>([])
 
   const [LrBtnClicked,setLrBtnClicked] = useState<boolean>(false)// LR - latest release
   const [TBtnClicked,setTBtnClicked] = useState<boolean>(false) // trending 
@@ -59,23 +61,45 @@ const MangaTab = () => {
     setLrBtnClicked(false)
   }
 
-  const searchList = ()=>{
-    console.log(searchQuery)
+  const searchList = async(e:React.ChangeEvent<HTMLInputElement>)=>{
 
-    setSearchQuery("")
+    setSearchQuery(e.target.value)
+
+    if(LrBtnClicked){
+
+      const filteredLatestData = LatestManga.filter((latest)=>(
+        latest.Title.toLowerCase().includes(searchQuery.toLowerCase())
+      ))
+      if(filteredLatestData.length===0){
+        await LatestRelease()
+      }else{
+        setFilteredLatestMangaData(filteredLatestData)
+      }
+
+    }else if(TBtnClicked){
+
+      const filteredTrendingData = TrendingManga.filter((trending)=>(
+        trending.Title.toLowerCase().includes(searchQuery.toLowerCase())
+      ))
+
+      if(filteredTrendingData.length===0){
+     
+        await Trending()
+      }else{
+        setFilteredTrendingMangaData(filteredTrendingData)
+      }
+      
+    }
+
+    console.log("search query",e.target.value)
+
   }
-
 
 
   return (
     <div className='manga'>
-        <InputGroup size='md' margin={'6px 0px'}>
-            <Input placeholder='search for manga' size='md' value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)}/>
-            <InputRightAddon color={'gray'}>
-              <button onClick={searchList}>
-                search
-              </button>
-            </InputRightAddon>
+        <InputGroup size='md' margin={'6px 0px'} justifyContent={'center'}>
+            <Input placeholder='search for anime' id='searchAnime' size='md' w={'95%'} value={searchQuery} onChange={(event)=>searchList(event)}/>
         </InputGroup>
         <div className='main'>
           <div className='searchBtns'>     
