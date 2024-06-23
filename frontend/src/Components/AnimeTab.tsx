@@ -56,7 +56,6 @@ const AnimeTab = () => {
 
        setFilteredLatestAnimeData(filteredLatestData)
 
-
     }else if(TBtnClicked){
 
       const filteredTrendingData = TrendingAnime.filter((trending)=>(
@@ -65,7 +64,6 @@ const AnimeTab = () => {
 
       setFilteredTrendingAnimeData(filteredTrendingData)
 
-      
     }
 
     // console.log("search query",e.target.value)

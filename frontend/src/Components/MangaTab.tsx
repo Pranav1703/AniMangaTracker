@@ -70,11 +70,8 @@ const MangaTab = () => {
       const filteredLatestData = LatestManga.filter((latest)=>(
         latest.Title.toLowerCase().includes(searchQuery.toLowerCase())
       ))
-      if(filteredLatestData.length===0){
-        await LatestRelease()
-      }else{
-        setFilteredLatestMangaData(filteredLatestData)
-      }
+
+      setFilteredLatestMangaData(filteredLatestData)
 
     }else if(TBtnClicked){
 
@@ -82,13 +79,8 @@ const MangaTab = () => {
         trending.Title.toLowerCase().includes(searchQuery.toLowerCase())
       ))
 
-      if(filteredTrendingData.length===0){
-     
-        await Trending()
-      }else{
-        setFilteredTrendingMangaData(filteredTrendingData)
-      }
-      
+      setFilteredTrendingMangaData(filteredTrendingData)
+ 
     }
 
     console.log("search query",e.target.value)
@@ -122,7 +114,11 @@ const MangaTab = () => {
             LrBtnClicked===true?(
                   <div className='LR-List'>
                     {
-                      LatestManga.length > 0 ?
+                      (LatestManga.length>0 && searchQuery.length>1)?(
+                        filteredLatestMangaData.map((i:LrManga)=>(
+                          <LatestReleaseCard key={i.id} cardtype={"manga"} title={i.Title} chapters={i.Chapters_released} mangaUrl={i.Url} imgSrc={i.ImgSrc} />
+                        ))
+                      ):(LatestManga.length > 0 )?
                       (
                         LatestManga.map((i:LrManga)=>(
                           <LatestReleaseCard key={i.id} cardtype={"manga"} title={i.Title} chapters={i.Chapters_released} mangaUrl={i.Url} imgSrc={i.ImgSrc} />
@@ -137,7 +133,11 @@ const MangaTab = () => {
               ):TBtnClicked?(
                   <div className='T-List'>
                     {
-                      TrendingManga.length>0?(
+                      (TrendingManga.length>0 && searchQuery.length>1)?(
+                        filteredTrendingMangaData.map((i)=>(
+                          <TrendingCard key={i.Position} title={i.Title} imgSrc={i.ImgSrc} link={i.Url} position={i.Position} cardType={"manga"}/>
+                        ))
+                      ):(TrendingManga.length>0)?(
                         TrendingManga.map((i)=>(
                           <TrendingCard key={i.Position} title={i.Title} imgSrc={i.ImgSrc} link={i.Url} position={i.Position} cardType={"manga"}/>
                         ))
