@@ -2,7 +2,7 @@
 
 ## Ani-manga scraper
 
-Ani-manga Scraper is a desktop application designed to display trending and latest info about manga and anime. Built using the Wails framework in Go, this app leverages the Colly scraping framework to fetch data from popular manga and anime websites. Two to be specific. 
+Ani-manga Scraper is a desktop application designed to display trending and latest info about manga and anime. Built using the Wails framework in Go, this app leverages the Colly scraping framework to fetch data from popular manga and anime websites. Two to be specific.\n
 for latest manga info - https://ww1.mangafreak.me
 for trending manga info - https://mangareader.to/home
 for anime info - https://hianime.to/home
